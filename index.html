@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Number Arena 3D</title>
+
+  <!-- PWA manifest & icons -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f1215">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Number Arena 3D">
+
+  <style>
+    html, body {
+      margin: 0; height: 100%; background: #0f1215; color: #e7e7e7;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    #app { width: 100%; height: 100%; position: relative; overflow: hidden; }
+    #overlay {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      top: 12px; padding: 8px 12px; background: rgba(20,24,28,0.7); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; display: flex; gap: 14px; align-items: center; backdrop-filter: blur(6px);
+      z-index: 10; font-weight: 600;
+    }
+    #bottomBar {
+      position: absolute; left: 50%; transform: translateX(-50%);
+      bottom: 8%; padding: 10px 14px; background: rgba(20,24,28,0.7); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; z-index: 10; font-size: 14px; text-align: center; backdrop-filter: blur(6px);
+    }
+    .btn {
+      background: #1a6d3a; color: white; border: none; padding: 8px 12px; border-radius: 8px;
+      cursor: pointer; font-weight: 700;
+    }
+    .btn:disabled { background: #3a3a3a; cursor: not-allowed; }
+    #mobileHint {
+      position: absolute; right: 12px; bottom: 12px; color: #cfcfcf; font-size: 12px; z-index: 10;
+      background: rgba(20,24,28,0.6); padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);
+    }
+    #joystick { position: absolute; left: 18px; bottom: 18px; width: 140px; height: 140px; z-index: 11; }
+    #tutorial{position:absolute;inset:0;background:rgba(8,10,12,0.65);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:20}
+    .t-card{width:86%;max-width:520px;background:#151a1f;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px}
+    .t-step{font-weight:700;margin-bottom:10px}
+    .t-actions{display:flex;gap:8px;justify-content:flex-end}
+    canvas { display: block; }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://esm.sh/three@0.160.0",
+      "three/addons/controls/OrbitControls.js": "https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js",
+      "nipplejs": "https://esm.sh/nipplejs@0.10.1"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <div id="overlay">
+      <div id="status">Round 1 • First to 3 wins</div>
+      <div id="score">You 0 — 0 CPU</div>
+      <button id="playBtn" class="btn" disabled>Play Number</button>
+    </div>
+    <div id="bottomBar">Move onto a tile, then press Play Number. WASD on desktop. Joystick on mobile.</div>
+    <div id="mobileHint" style="display:none">Tap tiles to auto-walk. Use joystick to steer. Press Play to submit.</div>
+    <div id="joystick" style="display:none"></div>
+    <div id="tutorial" style="display:none">
+      <div class="t-card">
+        <div class="t-step" id="tStep"></div>
+        <div class="t-actions">
+          <button id="tPrev" class="btn" style="background:#3a4a52">Back</button>
+          <button id="tNext" class="btn">Next</button>
+          <button id="tSkip" class="btn" style="background:#3a4a52">Skip</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="./main.js"></script>
+  <!-- Register the service worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./service-worker.js').catch(function(err) {
+          console.error('Service worker registration failed:', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
