@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Planet Hacker – Prototype</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://esm.sh/three@0.169.0",
+        "three/addons/": "https://esm.sh/three@0.169.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <canvas id="scene"></canvas>
+
+  <!-- Top HUD: metrics + sun/time -->
+  <div id="top-hud">
+    <div class="metric">
+      <span class="label">Stability</span>
+      <span id="stabilityValue" class="value">100%</span>
+    </div>
+    <div class="metric">
+      <span class="label">Climate</span>
+      <span id="climateValue" class="value">0.0</span>
+    </div>
+    <div class="metric">
+      <span class="label">Destruction</span>
+      <span id="destructionValue" class="value">0.0</span>
+    </div>
+    <div class="metric">
+      <span class="label">Time</span>
+      <span id="timeValue" class="value">0 yrs</span>
+    </div>
+    <div class="metric">
+      <span class="label">Suns</span>
+      <span id="sunValue" class="value">1</span>
+    </div>
+  </div>
+
+  <!-- Time controls -->
+  <div id="time-controls">
+    <button data-speed="pause">⏸</button>
+    <button data-speed="1y">▶ 1y</button>
+    <button data-speed="1k">⏩ 1k</button>
+    <button data-speed="1m">⏩ 1M</button>
+    <button data-speed="5m">⏩ 5M</button>
+    <button id="skip5m">Skip +5M</button>
+  </div>
+
+  <!-- Tool tray -->
+  <div id="tool-tray">
+    <button class="tool-button active" data-tool="laser" title="Planet Laser">🔴</button>
+    <button class="tool-button" data-tool="megaLaser" title="Giant Planet Laser">💥🔴</button>
+    <button class="tool-button" data-tool="starLaser" title="Star Maker Laser">💫☀️</button>
+    <button class="tool-button" data-tool="heat" title="Heat Beam">🟡</button>
+    <button class="tool-button" data-tool="freeze" title="Freeze Ray">🔵</button>
+    <button class="tool-button" data-tool="gravity" title="Gravity Disruptor">🟣</button>
+    <button class="tool-button" data-tool="stretch" title="Stretch Earth">🟤</button>
+    <button id="spawnShip" title="Spawn Big Ship">🚀</button>
+    <button id="crashMoon" title="Crash Moon Into Earth">🌙💥</button>
+    <button id="insideView" title="Toggle Inside View">🧿</button>
+    <button id="flipPlanet" title="Flip Planet">⤵️</button>
+    <button id="addSun" title="Add Sun">+☀️</button>
+    <button id="removeSun" title="Remove Sun">−☀️</button>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
+
